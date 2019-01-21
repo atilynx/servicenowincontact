@@ -38,12 +38,12 @@ function handleCommunicationEvent(context) {
 
 function initSuccess(snConfig) {
 	console.log("openframe configuration",snConfig);
+	console.log("openframe configuration - get business id");
+	fetchFinesseCredentials();
 	
 	//register for communication event from TopFrame
 	openFrameAPI.subscribe(openFrameAPI.EVENTS.COMMUNICATION_EVENT,
 	handleCommunicationEvent);
-	
-	fetchFinesseCredentials();
 }
 
 function initFailure(error) {
@@ -59,6 +59,14 @@ function communicateWithInnerFrame(data){
 window.addEventListener("DOMContentLoaded", function(){
 	var openframe = getTopWindow().document.getElementById('mainFrame');
 	openframe.setAttribute("style","right:"+frameRight+"px;bottom:"+frameBottom+"px;width:"+frameWidth+"px");
+	
+	var headerFrame = getTopWindow().document.getElementById('headerMainFrame');
+	headerFrame.setAttribute("style","height:35px;background-color:#303a46");
+	getTopWindow().document.getElementById('headerMainFrame').getElementsByClassName('titleIcon')[0].setAttribute("style","display:none");	
+	getTopWindow().document.getElementById('headerMainFrame').getElementsByClassName('callInfo')[0].setAttribute("style","margin-top: 5px");
+	
+getTopWindow().document.getElementById('headerMainFrame').getElementsByClassName('closeIcon')[0].setAttribute("style","background-size: 12px");
+	
 });
 
 //add eventlistener for message event from inner frame
@@ -89,7 +97,7 @@ function innerFrameListener(event) {
 			newFormURL = dataArr[2];
 			openFrameAPI.show();
 			if(isClickToCall == false)
-				getUserId(dataArr[1],true,"DNIS",null);
+				getUserId(dataArr[1],true,"");
 			
 			isClickToCall = false;
 		}else if(dataArr[0] === "OPEN_INCIDENT"){
@@ -97,11 +105,21 @@ function innerFrameListener(event) {
 				var hideFrame = dataArr[2];
 				if(hideFrame == "true")
 					openFrameAPI.hide();
-			}
-		} else {
+		} else if(dataArr[0] === "SAVE_LOGIN"){
+			var user = JSON.parse(dataArr[1]);
+			console.log("saving incontact details.....", user);
+			var ga = new GlideAjax('FinesseCredentials');
+			ga.addParam('sysparm_name','saveCredentials');
+			ga.addParam('sysparm_username',user.username);
+			ga.addParam('sysparm_password',user.password);
+			ga.addParam('sysparm_stationPhoneNumber',user.stationPhoneNumber);
+			ga.addParam('sysparm_businessUnitId',user.businessUnitId);
+			ga.getXML(parseSaveCredentials);
+		}else {
 			return;
 		}
 	}
+}
 	
 	function updateActivity(incidentId, dataObj){
 		$j.ajax({
@@ -158,6 +176,7 @@ function innerFrameListener(event) {
 	}
 
 	function fetchFinesseCredentials(){
+		console.log("fetching incontact details.....");
 		var ga = new GlideAjax('FinesseCredentials');
 		ga.addParam('sysparm_name','getCredentials');
 		ga.getXML(parseFinesseCredentials);
@@ -174,7 +193,28 @@ function innerFrameListener(event) {
 			if(result.username != null){
 				result.type = "LOGIN";
 				communicateWithInnerFrame(result);
+			} else if(result.buid != null){
+				result.type = "UPDATE_BUID";
+				communicateWithInnerFrame(result);
 			}
+		}
+	}
+	
+	function parseSaveCredentials(response)
+	{
+		console.log("Response in parseSaveCredentials : ");
+		console.log(response);
+		var answer = response.responseXML.documentElement.getAttribute("answer");
+		console.log(answer);
+		if(answer != null){
+// 			var result = JSON.parse(answer);
+// 			if(result.username != null){
+// 				result.type = "LOGIN";
+// 				communicateWithInnerFrame(result);
+// 			} else if(result.buid != null){
+// 				result.type = "UPDATE_BUID";
+// 				communicateWithInnerFrame(result);
+// 			}
 		}
 	}]]></client_script>
         <description/>
@@ -193,13 +233,13 @@ function innerFrameListener(event) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-09-27 14:20:55</sys_created_on>
         <sys_id>e8a16c39dbfc23008596d426ca9619f3</sys_id>
-        <sys_mod_count>105</sys_mod_count>
+        <sys_mod_count>120</sys_mod_count>
         <sys_name>index</sys_name>
         <sys_package display_value="AcqCTI" source="x_241495_acqcti">0c9124b5dbfc23008596d426ca9619e1</sys_package>
         <sys_policy/>
         <sys_scope display_value="AcqCTI">0c9124b5dbfc23008596d426ca9619e1</sys_scope>
         <sys_update_name>sys_ui_page_e8a16c39dbfc23008596d426ca9619f3</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2018-11-21 07:48:07</sys_updated_on>
+        <sys_updated_on>2019-01-21 07:01:10</sys_updated_on>
     </sys_ui_page>
 </record_update>

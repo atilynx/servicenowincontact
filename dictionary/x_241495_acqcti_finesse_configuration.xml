@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element label="Finesse Configuration" max_length="40" name="x_241495_acqcti_finesse_configuration" type="collection">
-        <element label="Finesse Extension" max_length="10" name="finesse_extension" type="string"/>
-        <element label="Finesse Password" max_length="255" name="finesse_password" type="password2"/>
-        <element label="Finesse Username" max_length="10" name="finesse_username" type="string"/>
-        <element label="SN User" max_length="32" name="sn_user" reference="sys_user" type="reference"/>
+    <element label="InContact Configuration" max_length="40" name="x_241495_acqcti_finesse_configuration" type="collection">
+        <element label="Business Unit ID" mandatory="true" max_length="50" name="business_unit_id" type="string"/>
+        <element label="Station Number" max_length="10" name="finesse_extension" type="string"/>
+        <element attributes="no_data_replicate=true,edge_encryption_enabled=true" label="Password" max_length="255" name="finesse_password" type="password2"/>
+        <element label="Username" max_length="50" name="finesse_username" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="SN User" max_length="32" name="sn_user" reference="sys_user" type="reference"/>
         <index name="index">
             <element name="sn_user"/>
         </index>
