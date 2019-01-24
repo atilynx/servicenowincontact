@@ -86,11 +86,12 @@ function innerFrameListener(event) {
 		}else if(dataArr[0] === "HIDE_FRAME"){
 			openFrameAPI.hide();
 		}else if(dataArr[0] === "SHOW_INBOUND"){
-			newFormURL = dataArr[3];
+			newFormURL = dataArr[4];
 			openFrameAPI.show();
 			var inCallerId = dataArr[1];
-			var incidentNumber = dataArr[2];
-			getUserId(inCallerId,true,incidentNumber);
+			var isSearchByANI = (dataArr[2] === "true") ? true : false;
+			var incidentNumber = dataArr[3];
+			getUserId(inCallerId,isSearchByANI,incidentNumber);
 			
 		}else if(dataArr[0] === "SHOW_OUTBOUND"){
 			console.log("isClickToCall : ",isClickToCall);
@@ -134,7 +135,7 @@ function innerFrameListener(event) {
 		});
 	}
 
-	function getUserId(phone,showNewFrom,incidentNumber){
+	function getUserId(phone,isSearchByANI,incidentNumber){
 		$j.ajax({
 			url: "/api/now/table/sys_user?sysparm_query=phone="+phone+"^ORhome_phone="+phone+"^NQmobile_phone="+phone+"&sysparm_fields=sys_id",
 			type: 'GET',
@@ -144,21 +145,26 @@ function innerFrameListener(event) {
 				if(res.result.length > 0){
 					caller_sys_id=res.result[0].sys_id;
 
-					if(showNewFrom == true && caller_sys_id != null){
-						console.log("incident number value : " + incidentNumber);
-						if(incidentNumber.length > 0){
-							openFrameAPI.openServiceNowForm({entity:'incident', query:'sysparm_query=number=INC'+incidentNumber+'&sysparm_view=ITIL'});
-						}else {
+					if(isSearchByANI == true && caller_sys_id != null){
+						console.log("Search by ANI : " + phone);
 							openFrameAPI.openServiceNowForm({entity:'sys_user', query:'sysparm_query=phone='+phone+'^ORhome_phone='+phone+'^NQmobile_phone='+phone+'&sysparm_view=ITIL'});							
-						}
 					}
 
 					fetchCallerIncidents();
-				}else if(res.result.length == 0 && showNewFrom == true){
+				}else if(res.result.length == 0 && isSearchByANI == true){
 					openFrameAPI.openCustomURL(newFormURL);
 				}
 			}
 		});
+		
+		if(isSearchByANI == false){
+			console.log("Search by Incident Number : " + incidentNumber);
+			if(incidentNumber.length > 0){
+				openFrameAPI.openServiceNowForm({entity:'incident', query:'sysparm_query=number=INC'+incidentNumber+'&sysparm_view=ITIL'});
+			}else {
+				openFrameAPI.openCustomURL("incident.do");						
+			}
+		}
 	}
 
 	function fetchCallerIncidents(){
@@ -233,13 +239,13 @@ function innerFrameListener(event) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-09-27 14:20:55</sys_created_on>
         <sys_id>e8a16c39dbfc23008596d426ca9619f3</sys_id>
-        <sys_mod_count>120</sys_mod_count>
+        <sys_mod_count>121</sys_mod_count>
         <sys_name>index</sys_name>
         <sys_package display_value="AcqCTI" source="x_241495_acqcti">0c9124b5dbfc23008596d426ca9619e1</sys_package>
         <sys_policy/>
         <sys_scope display_value="AcqCTI">0c9124b5dbfc23008596d426ca9619e1</sys_scope>
         <sys_update_name>sys_ui_page_e8a16c39dbfc23008596d426ca9619f3</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-01-21 07:01:10</sys_updated_on>
+        <sys_updated_on>2019-01-24 10:31:46</sys_updated_on>
     </sys_ui_page>
 </record_update>
