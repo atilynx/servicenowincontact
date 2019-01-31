@@ -229,7 +229,6 @@ function innerFrameListener(event) {
         <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
 <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
 	<g:requires name="x_241495_acqcti.openframeapi.jsdbx" />
-	<g:requires name="x_241495_acqcti.MyScript.jsdbx" />
 	
 	<iframe src="${gs.getMessage(gs.getProperty('x_241495_acqcti.appurl'))}" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="100%" width="100%" id="finesse_frame"></iframe> 
 </j:jelly>]]></html>
@@ -239,13 +238,13 @@ function innerFrameListener(event) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-09-27 14:20:55</sys_created_on>
         <sys_id>e8a16c39dbfc23008596d426ca9619f3</sys_id>
-        <sys_mod_count>121</sys_mod_count>
+        <sys_mod_count>122</sys_mod_count>
         <sys_name>index</sys_name>
         <sys_package display_value="AcqCTI" source="x_241495_acqcti">0c9124b5dbfc23008596d426ca9619e1</sys_package>
         <sys_policy/>
         <sys_scope display_value="AcqCTI">0c9124b5dbfc23008596d426ca9619e1</sys_scope>
         <sys_update_name>sys_ui_page_e8a16c39dbfc23008596d426ca9619f3</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-01-24 10:31:46</sys_updated_on>
+        <sys_updated_on>2019-01-31 07:16:34</sys_updated_on>
     </sys_ui_page>
 </record_update>
