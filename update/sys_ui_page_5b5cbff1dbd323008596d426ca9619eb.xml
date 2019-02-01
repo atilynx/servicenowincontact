@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
     <sys_ui_page action="INSERT_OR_UPDATE">
         <category>general</category>
-        <client_script><![CDATA[function loadPhoneNumbers(phoneNos, recSysId){ 
+        <client_script><![CDATA[function loadPhoneNumbers(phone_fields,phone_labels, recSysId){ 
 	var labels = $j('.phone_number_selector .labels');
 	var values = $j('.phone_number_selector .values');
-	var nos = phoneNos.split('^');
-	var value;
-	var data= [];
-	for(var i=0; i < nos.length; i++) {
-		value = nos[i].split(':');
-		var e = '<div style="padding-bottom:10px;"><span style="padding-right:10px; width:50%;">'+value[0]+':</span></div>';
-		var v = '<div style="padding-bottom:10px;"><a style="color: #278efc;width:50%" onclick="numberClicked(this)" id="'+recSysId+'">'+value[1]+'</a></div>';
+	var labelArr = phone_labels.split(',');
+	var fieldArr = phone_fields.split(',');
+	for(var i=0; i < labelArr.length; i++) {
+		var e = '<div style="padding-bottom:10px;text-transform: capitalize"><span style="padding-right:10px; width:50%;">'+labelArr[i].replace(new RegExp("_", 'g')," ")+':</span></div>';
+		var v = '<div style="padding-bottom:10px;"><a style="color: #278efc;width:50%" onclick="numberClicked(this)" id="'+recSysId+'">'+fieldArr[i]+'</a></div>';
 		
 		labels.append(e);
 		values.append(v);
@@ -30,25 +28,13 @@ function numberClicked(element) {
 	<j:set var="jvar_phone_labels" value="${sysparm_labels}"/>
 	<j:set var="jvar_ref_sys_id" value="${sysparm_sysid}"/>
 	
-	<g:evaluate var="jvar_phone_numbers" object="true" jelly="true">
-		  var answer = new Array();
-		  var value;
-		  var fields = '${jvar_phone_fields}'.split(',');
-		  var labels = '${jvar_phone_labels}'.split(',');
-			for(var i=0; i != fields.length; i++) {
-				value = fields[i];
-				if(value)
-					answer.push(labels[i]+':'+value);
-			}
-		  answer.join('^');
-	</g:evaluate>
 <div class="phone_number_selector">
 	<div class="labels" style="width:40%;float:left"></div>
 	<div class="values"></div>
 </div>
 	<script>
 		addLoadEvent(function () {
-			loadPhoneNumbers('${jvar_phone_numbers}', '${jvar_ref_sys_id}');
+			loadPhoneNumbers('${jvar_phone_fields}','${jvar_phone_labels}', '${jvar_ref_sys_id}');
 		});
 	</script>
 </j:jelly>]]></html>
@@ -56,15 +42,15 @@ function numberClicked(element) {
         <processing_script/>
         <sys_class_name>sys_ui_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2019-01-31 07:59:55</sys_created_on>
-        <sys_id>0df24c16db5323008596d426ca961968</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_created_on>2019-01-30 12:54:11</sys_created_on>
+        <sys_id>5b5cbff1dbd323008596d426ca9619eb</sys_id>
+        <sys_mod_count>27</sys_mod_count>
         <sys_name>select_customer_phone</sys_name>
         <sys_package display_value="AcqCTI" source="x_241495_acqcti">0c9124b5dbfc23008596d426ca9619e1</sys_package>
         <sys_policy/>
         <sys_scope display_value="AcqCTI">0c9124b5dbfc23008596d426ca9619e1</sys_scope>
-        <sys_update_name>sys_ui_page_0df24c16db5323008596d426ca961968</sys_update_name>
+        <sys_update_name>sys_ui_page_5b5cbff1dbd323008596d426ca9619eb</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-01-31 07:59:55</sys_updated_on>
+        <sys_updated_on>2019-02-01 10:01:15</sys_updated_on>
     </sys_ui_page>
 </record_update>
