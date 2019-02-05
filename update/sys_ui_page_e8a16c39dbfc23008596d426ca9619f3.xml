@@ -59,6 +59,13 @@ function communicateWithInnerFrame(data){
 window.addEventListener("DOMContentLoaded", function(){
 	var openframe = getTopWindow().document.getElementById('mainFrame');
 	openframe.setAttribute("style","right:"+frameRight+"px;bottom:"+frameBottom+"px;width:"+frameWidth+"px");
+	
+	var headerFrame = getTopWindow().document.getElementById('headerMainFrame');
+	headerFrame.setAttribute("style","height:35px;background-color:#303a46");
+	getTopWindow().document.getElementById('headerMainFrame').getElementsByClassName('titleIcon')[0].setAttribute("style","display:none");	
+	getTopWindow().document.getElementById('headerMainFrame').getElementsByClassName('callInfo')[0].setAttribute("style","margin-top: 5px");
+	
+getTopWindow().document.getElementById('headerMainFrame').getElementsByClassName('closeIcon')[0].setAttribute("style","background-size: 12px");
 });
 
 //add eventlistener for message event from inner frame
@@ -192,13 +199,13 @@ function innerFrameListener(event) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2018-09-27 14:20:55</sys_created_on>
         <sys_id>e8a16c39dbfc23008596d426ca9619f3</sys_id>
-        <sys_mod_count>107</sys_mod_count>
+        <sys_mod_count>108</sys_mod_count>
         <sys_name>index</sys_name>
         <sys_package display_value="AcqCTI" source="x_241495_acqcti">0c9124b5dbfc23008596d426ca9619e1</sys_package>
         <sys_policy/>
         <sys_scope display_value="AcqCTI">0c9124b5dbfc23008596d426ca9619e1</sys_scope>
         <sys_update_name>sys_ui_page_e8a16c39dbfc23008596d426ca9619f3</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-01-31 07:58:53</sys_updated_on>
+        <sys_updated_on>2019-02-01 10:56:26</sys_updated_on>
     </sys_ui_page>
 </record_update>
